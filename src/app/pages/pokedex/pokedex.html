@@ -1,0 +1,110 @@
+<main>
+  <h1>Pokédex</h1>
+
+  <div class="search">
+    <label for="pokemon-search">Buscar Pokémon por nome ou ID</label>
+    <p class="search-hint">Digite ao menos 2 caracteres — a busca acontece enquanto você digita.</p>
+    <div class="search-row">
+      <input
+        id="pokemon-search"
+        #searchInput
+        type="search"
+        placeholder="ex.: pikachu ou 25"
+        (input)="onTyping(searchInput.value)"
+      />
+    </div>
+  </div>
+
+  @if (types().length > 0) {
+    <div class="filters">
+      <label for="type-filter">Filtrar por tipo</label>
+      <select id="type-filter" #typeFilter (change)="applyTypeFilter(typeFilter.value)">
+        <option value="">Todos os tipos</option>
+        @for (type of types(); track type.name) {
+          <option [value]="type.name" [selected]="type.name === activeType()">
+            {{ type.name }}
+          </option>
+        }
+      </select>
+    </div>
+  }
+
+  @let searchResult = searchState();
+
+  @if (searchResult.status !== 'idle') {
+    @switch (searchResult.status) {
+      @case ('loading') {
+        <p aria-live="polite">Buscando...</p>
+      }
+      @case ('notFound') {
+        <p role="alert">
+          Não encontramos esse Pokémon. Confira o nome ou tente usar o número da Pokédex.
+        </p>
+        <button type="button" (click)="resetSearch()">Voltar ao catálogo</button>
+      }
+      @case ('error') {
+        <p role="alert">{{ searchResult.message }}</p>
+        <button type="button" (click)="retrySearch()">Tentar novamente</button>
+      }
+      @case ('success') {
+        <section class="search-result">
+          <app-pokemon-card [pokemon]="searchResult.pokemon" />
+          <button type="button" (click)="resetSearch()">Voltar ao catálogo</button>
+        </section>
+      }
+    }
+  } @else {
+    @let filterResult = filterState();
+
+    @if (filterResult.status !== 'idle') {
+      @switch (filterResult.status) {
+        @case ('loading') {
+          <p aria-live="polite">Carregando Pokémon do tipo...</p>
+        }
+        @case ('error') {
+          <p role="alert">{{ filterResult.message }}</p>
+          <button type="button" (click)="retryFilter()">Tentar novamente</button>
+        }
+        @case ('success') {
+          <section class="filter-result">
+            <h2>{{ filterResult.typeName }} ({{ filterResult.pokemons.length }})</h2>
+            <button type="button" (click)="clearFilter()">Limpar filtro</button>
+            <div class="pokemon-grid">
+              @for (pokemon of filterResult.pokemons; track pokemon.id) {
+                <app-pokemon-card [pokemon]="pokemon" />
+              }
+            </div>
+          </section>
+        }
+      }
+    } @else {
+      @let current = state();
+
+      @switch (current.status) {
+        @case ('loading') {
+          <p aria-live="polite">Carregando Pokémon...</p>
+        }
+        @case ('error') {
+          <p role="alert">{{ current.message }}</p>
+          <button type="button" (click)="load()">Tentar novamente</button>
+        }
+        @case ('success') {
+          <div class="pokemon-grid">
+            @for (pokemon of current.pokemons; track pokemon.id) {
+              <app-pokemon-card [pokemon]="pokemon" />
+            }
+          </div>
+          <nav class="pagination" aria-label="Paginação">
+            <button type="button" [disabled]="!canGoPrevious()" (click)="goToPage(page() - 1)">
+              ← Anterior
+            </button>
+            <span>Página {{ page() }} de {{ totalPages() }}</span>
+            <button type="button" [disabled]="!canGoNext()" (click)="goToPage(page() + 1)">
+              Próxima →
+            </button>
+          </nav>
+        }
+      }
+    }
+  }
+</main>

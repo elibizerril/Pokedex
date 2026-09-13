@@ -1,0 +1,80 @@
+.back-button {
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+.detail h1 {
+  margin: 0;
+  text-transform: capitalize;
+}
+
+.detail-image {
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
+}
+
+.detail-stats {
+  display: flex;
+  gap: var(--space-xl);
+  margin: 0;
+}
+
+.detail-stats div {
+  text-align: center;
+}
+
+.detail-stats dt {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+.detail-stats dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.detail-types {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.type-badge {
+  padding: var(--space-xs) var(--space-md);
+  border-radius: 12px;
+  background: var(--color-surface-hover);
+  color: var(--color-text);
+  text-transform: capitalize;
+}
+
+.type-badge--normal { background: var(--type-normal-bg); color: var(--type-normal-fg); }
+.type-badge--fire { background: var(--type-fire-bg); color: var(--type-fire-fg); }
+.type-badge--water { background: var(--type-water-bg); color: var(--type-water-fg); }
+.type-badge--electric { background: var(--type-electric-bg); color: var(--type-electric-fg); }
+.type-badge--grass { background: var(--type-grass-bg); color: var(--type-grass-fg); }
+.type-badge--ice { background: var(--type-ice-bg); color: var(--type-ice-fg); }
+.type-badge--fighting { background: var(--type-fighting-bg); color: var(--type-fighting-fg); }
+.type-badge--poison { background: var(--type-poison-bg); color: var(--type-poison-fg); }
+.type-badge--ground { background: var(--type-ground-bg); color: var(--type-ground-fg); }
+.type-badge--flying { background: var(--type-flying-bg); color: var(--type-flying-fg); }
+.type-badge--psychic { background: var(--type-psychic-bg); color: var(--type-psychic-fg); }
+.type-badge--bug { background: var(--type-bug-bg); color: var(--type-bug-fg); }
+.type-badge--rock { background: var(--type-rock-bg); color: var(--type-rock-fg); }
+.type-badge--ghost { background: var(--type-ghost-bg); color: var(--type-ghost-fg); }
+.type-badge--dragon { background: var(--type-dragon-bg); color: var(--type-dragon-fg); }
+.type-badge--dark { background: var(--type-dark-bg); color: var(--type-dark-fg); }
+.type-badge--steel { background: var(--type-steel-bg); color: var(--type-steel-fg); }
+.type-badge--fairy { background: var(--type-fairy-bg); color: var(--type-fairy-fg); }

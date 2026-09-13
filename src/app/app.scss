@@ -1,0 +1,32 @@
+:host {
+  display: block;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.app-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.theme-toggle {
+  padding: var(--space-xs) var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.app-content {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: var(--space-lg);
+}

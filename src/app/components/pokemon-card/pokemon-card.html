@@ -1,0 +1,11 @@
+<a class="pokemon-card" [routerLink]="['/pokemon', pokemon().id]">
+  <span class="pokemon-id">#{{ pokemon().id }}</span>
+  <img
+    class="pokemon-image"
+    [src]="pokemon().imageUrl"
+    [alt]="'Imagem do Pokémon ' + pokemon().name"
+    loading="lazy"
+    (error)="onImageError($event)"
+  />
+  <h2 class="pokemon-name">{{ pokemon().name }}</h2>
+</a>

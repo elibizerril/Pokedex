@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ThemeService } from './core/theme.service';
 
 @Component({
   imports: [RouterOutlet],
@@ -8,5 +9,5 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.html',
 })
 export class App {
-  protected readonly title = signal('pokedex');
+  protected readonly themeService = inject(ThemeService);
 }

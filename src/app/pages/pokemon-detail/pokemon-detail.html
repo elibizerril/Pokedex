@@ -1,0 +1,40 @@
+<main>
+  <button type="button" class="back-button" (click)="goBack()">← Voltar</button>
+
+  @let current = state();
+
+  @switch (current.status) {
+    @case ('loading') {
+      <p aria-live="polite">Carregando Pokémon...</p>
+    }
+    @case ('error') {
+      <p role="alert">{{ current.message }}</p>
+    }
+    @case ('success') {
+      <section class="detail">
+        <h1>#{{ current.pokemon.id }} {{ current.pokemon.name }}</h1>
+        <img
+          class="detail-image"
+          [src]="current.pokemon.imageUrl"
+          [alt]="'Imagem do Pokémon ' + current.pokemon.name"
+        />
+        <dl class="detail-stats">
+          <div>
+            <dt>Altura</dt>
+            <dd>{{ current.pokemon.heightMeters.toFixed(1) }} m</dd>
+          </div>
+          <div>
+            <dt>Peso</dt>
+            <dd>{{ current.pokemon.weightKg.toFixed(1) }} kg</dd>
+          </div>
+        </dl>
+        <div class="detail-types">
+          <span>Tipos:</span>
+          @for (type of current.pokemon.types; track type) {
+            <span [class]="'type-badge type-badge--' + type">{{ type }}</span>
+          }
+        </div>
+      </section>
+    }
+  }
+</main>
