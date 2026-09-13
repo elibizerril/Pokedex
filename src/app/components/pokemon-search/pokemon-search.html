@@ -1,0 +1,37 @@
+<div class="search">
+  <label for="pokemon-search">Buscar Pokémon por nome ou ID</label>
+  <p class="search-hint">Digite ao menos 2 caracteres — a busca acontece enquanto você digita.</p>
+  <div class="search-row">
+    <input
+      id="pokemon-search"
+      type="search"
+      placeholder="ex.: pikachu ou 25"
+      role="combobox"
+      aria-expanded="{{ open }}"
+      aria-controls="suggestions-listbox"
+      aria-autocomplete="list"
+      [attr.aria-activedescendant]="activeId"
+      (input)="onInput(combobox.value)"
+      (keydown)="onKeydown($event)"
+      (blur)="onBlur()"
+      #combobox
+    />
+    @if (open && suggestions.length > 0) {
+      <ul id="suggestions-listbox" class="suggestions" role="listbox" aria-label="Sugestões de Pokémon">
+        @for (suggestion of suggestions; track suggestion.name; let index = $index) {
+          <li
+            role="option"
+            [id]="'suggestion-' + index"
+            [class.active]="index === activeIndex"
+            [attr.aria-selected]="index === activeIndex"
+            (mousedown)="$event.preventDefault(); $event.stopPropagation()"
+            (click)="choose(suggestion)"
+          >
+            <span class="suggestion-name">{{ suggestion.name }}</span>
+            <span class="suggestion-id">#{{ suggestionId(suggestion.url) }}</span>
+          </li>
+        }
+      </ul>
+    }
+  </div>
+</div>

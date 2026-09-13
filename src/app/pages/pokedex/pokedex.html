@@ -1,19 +1,7 @@
 <main>
   <h1>Pokédex</h1>
 
-  <div class="search">
-    <label for="pokemon-search">Buscar Pokémon por nome ou ID</label>
-    <p class="search-hint">Digite ao menos 2 caracteres — a busca acontece enquanto você digita.</p>
-    <div class="search-row">
-      <input
-        id="pokemon-search"
-        #searchInput
-        type="search"
-        placeholder="ex.: pikachu ou 25"
-        (input)="onTyping(searchInput.value)"
-      />
-    </div>
-  </div>
+  <app-pokemon-search (typed)="onTyping($event)" (hintOpen)="hintOpen.set($event)" />
 
   @if (types().length > 0) {
     <div class="filters">
@@ -37,10 +25,12 @@
         <p aria-live="polite">Buscando...</p>
       }
       @case ('notFound') {
-        <p role="alert">
-          Não encontramos esse Pokémon. Confira o nome ou tente usar o número da Pokédex.
-        </p>
-        <button type="button" (click)="resetSearch()">Voltar ao catálogo</button>
+        @if (!hintOpen()) {
+          <p role="alert">
+            Não encontramos esse Pokémon. Confira o nome ou tente usar o número da Pokédex.
+          </p>
+          <button type="button" (click)="resetSearch()">Voltar ao catálogo</button>
+        }
       }
       @case ('error') {
         <p role="alert">{{ searchResult.message }}</p>

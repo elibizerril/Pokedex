@@ -53,6 +53,24 @@ describe('PokemonApiService', () => {
     expect(result).toBe(25);
   });
 
+  it('getAllPokemonNames consulta a lista completa uma única vez', () => {
+    let firstResult: string[] = [];
+    service.getAllPokemonNames().subscribe((names) => {
+      firstResult = names.map((n) => n.name);
+    });
+    httpMock
+      .expectOne({ method: 'GET', url: 'https://pokeapi.co/api/v2/pokemon?limit=2000&offset=0' })
+      .flush({ count: 1302, next: null, previous: null, results: [{ name: 'bulbasaur', url: 'https://pokeapi.co/api/v2/pokemon/1/' }] });
+
+    let secondResult: string[] = [];
+    service.getAllPokemonNames().subscribe((names) => {
+      secondResult = names.map((n) => n.name);
+    });
+
+    expect(firstResult).toEqual(['bulbasaur']);
+    expect(secondResult).toEqual(['bulbasaur']);
+  });
+
   it('getTypeDetail usa /type/{name}', () => {
     service.getTypeDetail('fire').subscribe();
 

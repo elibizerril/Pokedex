@@ -3,6 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Component, DestroyRef, computed, inject, signal } from '@angular/core';
 import { Observable, Subject, catchError, debounceTime, distinctUntilChanged, map, of, switchMap, tap } from 'rxjs';
 import { PokemonCard } from '../../components/pokemon-card/pokemon-card';
+import { PokemonSearch } from '../../components/pokemon-search/pokemon-search';
 import { PokemonApiService } from '../../core/pokemon-api.service';
 import { NamedApiResource } from '../../models/pokemon-api.models';
 import {
@@ -20,7 +21,7 @@ import {
   selector: 'app-pokedex',
   templateUrl: './pokedex.html',
   styleUrl: './pokedex.scss',
-  imports: [PokemonCard],
+  imports: [PokemonCard, PokemonSearch],
 })
 export class Pokedex {
   readonly pageSize = 12;
@@ -28,6 +29,7 @@ export class Pokedex {
   readonly state = signal<PokemonListState>({ status: 'loading' });
   readonly searchQuery = signal('');
   readonly searchState = signal<PokemonSearchState>({ status: 'idle' });
+  readonly hintOpen = signal(false);
   readonly filterState = signal<PokemonFilterState>({ status: 'idle' });
   readonly activeType = signal<string | null>(null);
   readonly types = signal<NamedApiResource[]>([]);
